@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "sdl.h": "c",
+        "stdio.h": "c",
+        "-criatewindov.h": "c",
+        "-cratewindow.h": "c",
+        "drawline.h": "c",
+        "stdlib.h": "c",
+        "window.h": "c",
+        "leters.h": "c",
+        "drawgravity.h": "c",
+        "draw.h": "c"
+    },
+    "terminal.integrated.defaultLocation": "view"
+}
