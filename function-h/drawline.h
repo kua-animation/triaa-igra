@@ -12,8 +12,7 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
+void player(int positionX, int positionY, int speed, int color[4], SDL_Renderer *renderer);
 
-extern SDL_Window *window;
-extern SDL_Renderer *renderer;
 
 #endif

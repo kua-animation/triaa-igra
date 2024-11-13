@@ -6,10 +6,7 @@
 #include <stdio.h>     // Include stdio for printf
 
 // Function declaration
-int _createWindow();
+int createWindow(SDL_Window **window, SDL_Renderer **renderer, int sizeX, int sizeY, int posX, int posY);
 
-// External variables for window and renderer
-extern SDL_Window *window;
-extern SDL_Renderer *renderer;
 
 #endif // WINDOW_H
