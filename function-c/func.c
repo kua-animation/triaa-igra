@@ -1,8 +1,8 @@
 #include "../function-h/func.h"
 #include <stdio.h>
 
-int colors(int col, int row, int color[row][col]) {
-    FILE *file = fopen("colors.txt", "r");
+int colors(int col, int row, int color[row][col], char *name) {
+    FILE *file = fopen(name, "r");
     if (file == NULL) {
         printf("Error opening file.\n");
         return 1;

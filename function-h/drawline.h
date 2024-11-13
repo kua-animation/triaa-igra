@@ -14,5 +14,6 @@
 
 void player(int positionX, int positionY, int speed, int color[4], SDL_Renderer *renderer);
 
+void _rectelgle(int positionX, int positionY, int height, int width, int addPositionX, int addPositionY, int color[4], SDL_Renderer *renderer);
 
 #endif

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
-int colors(int col, int row, int color[row][col]);
+int colors(int col, int row, int color[row][col], char *name);
 
 int _move_Wheel(int position, SDL_Event event, int speed);
 
