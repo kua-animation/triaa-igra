@@ -1,1 +1,1 @@
-gcc main.c function-c/func.c function-c/window.c function-c/drawline.c  -o tria-igra -Ic:/sdl2/x86_64-w64-mingw32/include -Lc:/sdl2/x86_64-w64-mingw32/lib -lSDL2
+gcc files-c/main.c files-c/func.c files-c/window.c files-c/drawline.c  -o tria-igra -Ic:/sdl2/x86_64-w64-mingw32/include -Lc:/sdl2/x86_64-w64-mingw32/lib -lSDL2

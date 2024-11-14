@@ -1,7 +1,8 @@
 // window.c
-#include "../function-h/window.h"
+#include "../files-h/window.h"
 
 int createWindow(SDL_Window **window, SDL_Renderer **renderer, int sizeX, int sizeY, int posX, int posY) {
+
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("SDL_Init Error: %s\n", SDL_GetError());
         return 1;

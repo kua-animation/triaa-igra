@@ -1,4 +1,4 @@
-#include "../function-h/func.h"
+#include "../files-h/func.h"
 #include <stdio.h>
 
 int colors(int col, int row, int color[row][col], char *name) {
@@ -47,3 +47,4 @@ int _move_Hold(int position, int speed, int botton){
     }
     return position;
 }
+

@@ -9,7 +9,8 @@
         "window.h": "c",
         "leters.h": "c",
         "drawgravity.h": "c",
-        "draw.h": "c"
+        "draw.h": "c",
+        "func.h": "c"
     },
     "terminal.integrated.defaultLocation": "view"
 }
