@@ -17,6 +17,6 @@ void _drawPlayer(int positionX, int positionY, int speed, int color[4], SDL_Rend
 
 void _rectelgle(int positionX, int positionY, int height, int width, int addPositionX, int addPositionY, int color[4], SDL_Renderer *renderer, int PlayerSizeX, int PlayerSizeY);
 
-void render(Player *name, int speed, int color[4][4], SDL_Renderer *renderer[]);
+void render(Player *name, int speed, int color[4][4], SDL_Renderer *renderer[], Rect *rect);
 
 #endif

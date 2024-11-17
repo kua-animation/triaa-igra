@@ -6,73 +6,10 @@ SDL_Window *Windows[2];
 SDL_Renderer *Renderers[3];
 
 SDL_Window *door;
-
-
-void colideScrine(Player *name, int scrineHeight, int scrineWidth, int *speed){
-    if (name->window.side.right > scrineWidth){
-        name->position.x = scrineWidth - name->window.Width;
-        *speed = 0;
-    }else if (name->window.side.left < 0){
-        name->position.x = 0;
-        *speed = 0;
-    }
-
-    if (name->window.side.bottom > scrineHeight){
-        name->position.y = scrineHeight - name->window.Height;
-        *speed = 0;
-    }else if (name->window.side.top < 0){
-        name->position.y = 0;
-        *speed = 0;
-    }
-}
-
-int colideWertcle(Player *name, Window *window, int *speed){
-    const int buffer = 30;
-    if (name->window.side.bottom > window->scrine.side.top + buffer && name->window.side.top < window->scrine.side.bottom - buffer){
-        if (name->window.side.right > window->scrine.side.left && name->window.side.left < window->scrine.side.left){
-            name->position.x = window->scrine.side.left - name->window.Width;
-            *speed = -*speed;
-        }
-        if (name->window.side.left < window->scrine.side.right && name->window.side.right > window->scrine.side.right){
-            name->position.x = window->scrine.side.right;
-            *speed = -*speed;
-        }
-    }if (name->window.side.left < window->scrine.side.right - buffer && name->window.side.right > window->scrine.side.left + buffer){
-        if (name->window.side.bottom > window->scrine.side.top && name->window.side.top < window->scrine.side.top){
-            name->position.y = window->scrine.side.top - name->window.Height;
-            *speed = -*speed;
-        }
-        if (name->window.side.top < window->scrine.side.bottom && name->window.side.bottom > window->scrine.side.bottom ){
-            name->position.y = window->scrine.side.bottom;
-            *speed = -*speed;
-        }
-    }
-}
-
-int colideRect(Player *name, Rect *rect, int *speed){
-    const int buffer = 10;
-    if (name->hitBox.side.bottom > rect->hitBox.top + buffer && name->hitBox.side.top < rect->hitBox.bottom - buffer){
-        if (name->hitBox.side.right > rect->hitBox.left && name->hitBox.side.left < rect->hitBox.left){
-            name->position.x = rect->hitBox.left - (name->window.Width/2 + name->scale.Width/2);
-            *speed = -*speed;
-        }
-        if (name->hitBox.side.left < rect->hitBox.right && name->hitBox.side.right > rect->hitBox.right){
-            name->position.x = rect->hitBox.right - (name->window.Width/2 - name->scale.Width/2);
-            *speed = -*speed;
-
-        }
-    }if (name->hitBox.side.left < rect->hitBox.right - buffer && name->hitBox.side.right > rect->hitBox.left + buffer){
-        if (name->hitBox.side.bottom > rect->hitBox.top && name->hitBox.side.top < rect->hitBox.top){
-            name->position.y = rect->hitBox.top - (name->window.Height/2 + name->scale.Height/2);
-            *speed = -*speed;
-        }
-        if (name->hitBox.side.top < rect->hitBox.bottom && name->hitBox.side.bottom > rect->hitBox.bottom ){
-            name->position.y = rect->hitBox.bottom - (name->window.Height/2 - name->scale.Height/2);
-            *speed = -*speed;
-        }
-    }
-}
-
+Rect rects[2]={
+    {{480,480},{300,300}},
+    {{300,480},{100,300}},
+};
 
 int main() {
     char *colorFile = "colors.txt"; 
@@ -86,9 +23,6 @@ int main() {
         player.scale.TrueSize.y,}
     };
 
-    Rect rect1={{450,450},
-                {300,300}
-    };
 
 
     srand(time(NULL));
@@ -110,6 +44,7 @@ int main() {
     int index = 0;
     int scrinHeight = 1080;
     int scrinWidth = 1920;
+    int mouceX, mouceY;
 
 
     if (createWindow(&Windows[0], &Renderers[0], player.window.Width,player.window.Height, 0,0) != 0) {
@@ -147,19 +82,14 @@ int main() {
             
             
             //player window size
-            if (a = _move_Hold(a, 1, 1) != 0){
-                player.window.Height = player.scale.TrueSize.y*2;
-                player.window.Width = player.scale.TrueSize.x*2;
-                SDL_SetWindowSize(Windows[0], player.window.Width, player.window.Height);
-                SDL_SetWindowPosition(Windows[0], player.position.x, player.position.y);
+            if (a = _move_Click(a,event, 1, 1) != 0){
+                player.position.x = mouceX;
+                player.position.y = mouceY;
                 a = 0;
             } else{
-                player.window.Height = player.scale.TrueSize.y;
-                player.window.Width = player.scale.TrueSize.x;
-                SDL_SetWindowSize(Windows[0], player.window.Width, player.window.Height); 
-                SDL_SetWindowPosition(Windows[0], player.position.x, player.position.y);
+                player.position.x = player.position.x;
+                player.position.y = player.position.y;
             }
-
             // axes swich
             if (index = _move_Click(index, event, 1,2) != 0){
                 player.position.x -= speed;
@@ -175,37 +105,49 @@ int main() {
             else if (speed < -5 + (player.window.Width / player.scale.TrueSize.x)*2){speed = -5 + (player.window.Width / player.scale.TrueSize.x)*2;} 
             
             // window colishon 
-            colideScrine(&player, scrinHeight, scrinWidth, &speed);
+            collisionScrine(&player, scrinHeight, scrinWidth, &speed);
         }
+        SDL_SetWindowPosition(Windows[0], player.position.x, player.position.y);
 
-        colideWertcle(&player, &doors, &speed);
+        SDL_GetMouseState(&mouceX,&mouceY);
 
-        colideRect(&player, &rect1, &speed);
-        player.window.side.bottom = player.position.y + player.window.Height;
-        player.window.side.top = player.position.y;
-        player.window.side.left = player.position.x;
-        player.window.side.right = player.position.x + player.window.Width;
+        collisionWindow(&player, &doors, &speed, NO_BOUNCE);
 
-        player.hitBox.position.x = player.position.x + (player.window.Width/2 - player.scale.Width/2); 
-        player.hitBox.position.y = player.position.y + (player.window.Height/2 - player.scale.Height/2);
-        player.hitBox.side.bottom = player.hitBox.position.y + player.scale.Height;
-        player.hitBox.side.top = player.hitBox.position.y;
-        player.hitBox.side.left = player.hitBox.position.x;
-        player.hitBox.side.right = player.hitBox.position.x + player.scale.Width;
+        collisionRect(&player, &rects[0], &speed, BOUNCE);
+        collisionRect(&player, &rects[1], &speed, BOUNCE);
 
-        rect1.hitBox.bottom = rect1.position.y + rect1.size.Height;
-        rect1.hitBox.top = rect1.position.y;
-        rect1.hitBox.left = rect1.position.x;
-        rect1.hitBox.right = rect1.position.x + rect1.size.Width;
+        setPlayerSide(&player);
+
+        SetRectSide(&rects[0]);
+        SetRectSide(&rects[1]);
+
 
         SDL_SetWindowAlwaysOnTop(door, SDL_TRUE);
 
         SDL_SetWindowFullscreen(Windows[1], SDL_WINDOW_FULLSCREEN_DESKTOP);
 
+    // Render  Window1
+    SDL_SetRenderDrawColor(Renderers[0], Color[1][0], Color[1][1], Color[1][2], Color[1][3]);
+    SDL_RenderClear(Renderers[0]);
 
-        render (&player,
-                speed,Color,
-                Renderers);
+    // player render 
+    _drawPlayer(player.window.Width/2 - player.scale.Width/2,player.window.Height/2 + player.scale.Height/2 ,speed ,Color[0],Renderers[0], player.scale.Width, player.scale.Height);
+
+    // world render 
+    _rectelgle(rects[0].position.x, rects[0].position.y, rects[0].size.Height, rects[0].size.Width, player.position.x, player.position.y, Color[3], Renderers[0], player.window.Width, player.window.Height);
+    _rectelgle(rects[1].position.x, rects[1].position.y, rects[1].size.Height, rects[1].size.Width, player.position.x, player.position.y, Color[3], Renderers[0], player.window.Width, player.window.Height);
+
+
+    SDL_RenderPresent(Renderers[0]);
+
+    SDL_SetRenderDrawColor(Renderers[2], Color[2][0], Color[2][1], Color[2][2], Color[2][3]);
+    SDL_RenderClear(Renderers[2]);
+
+    SDL_RenderPresent(Renderers[2]);
+
+
+    // Render Window2
+    SDL_Delay(10);
     }
     SDL_DestroyRenderer(Renderers[0]);
     SDL_DestroyWindow(Windows[0]);

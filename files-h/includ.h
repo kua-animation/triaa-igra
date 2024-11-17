@@ -8,6 +8,7 @@
 #include "createwindow.h"
 #include "drawline.h"
 #include "func.h"
+#include "player.h"
 #include "../struct/struct.h"
 
 

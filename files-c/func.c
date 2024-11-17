@@ -48,3 +48,9 @@ int _move_Hold(int position, int speed, int botton){
     return position;
 }
 
+void SetRectSide(Rect *rect){
+    rect->hitBox.bottom = rect->position.y + rect->size.Height;
+    rect->hitBox.top = rect->position.y;
+    rect->hitBox.left = rect->position.x;
+    rect->hitBox.right = rect->position.x + rect->size.Width;
+}
