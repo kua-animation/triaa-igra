@@ -1,6 +1,6 @@
 // window.h
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef CREATEWINDOW_H
+#define CREATEWINDOW_H
 
 #include <SDL2/SDL.h>  // Include SDL header
 #include <stdio.h>     // Include stdio for printf

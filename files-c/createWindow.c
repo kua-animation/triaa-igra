@@ -1,5 +1,5 @@
 // window.c
-#include "../files-h/window.h"
+#include "../files-h/createWindow.h"
 
 int createWindow(SDL_Window **window, SDL_Renderer **renderer, int sizeX, int sizeY, int posX, int posY) {
 
@@ -34,3 +34,4 @@ int createWindow(SDL_Window **window, SDL_Renderer **renderer, int sizeX, int si
 
     return 0; 
 }
+

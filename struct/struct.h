@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef STRUCT_H
+#define STRUCT_H
 
 
 
@@ -23,17 +23,37 @@
         int x;
         int y;
     }Position;
-    typedef struct Scale{
+    typedef struct Scales{
         int Width;
         int Height;
         TrueSize TrueSize;
-    }Scale;
+    }Scales;
 
+    typedef struct Scale{
+        int Width;
+        int Height;
+    }Scale;
+    typedef struct HitBox{
+        Position position;
+        Sides side;
+    }HitBox;
     typedef struct Palyer{
         Position position;
-        Scale scale;
+        Scales scale;
         Scrine window;
-        
+        HitBox hitBox;
     }Player;
+
+    typedef struct Window{
+        Position position;
+        Scrine scrine;
+    }Window;
+
+    typedef struct Rect{
+        Position position;
+        Scale size;
+        Sides hitBox;
+    }Rect;
+
 // main
 #endif

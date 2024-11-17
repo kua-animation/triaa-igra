@@ -1,5 +1,5 @@
 #include "../files-h/drawline.h"
-#include "../files-h/window.h"
+#include "../files-h/createWindow.h"
 
 
 void _drawPlayer(int positionX, int positionY, int speed, int color[4], SDL_Renderer *renderer, int PlayerWidth, int PlayerHeight){

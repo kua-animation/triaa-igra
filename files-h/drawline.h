@@ -11,7 +11,7 @@
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
-#include "../files-h/player.h"
+#include "../struct/struct.h"
 
 void _drawPlayer(int positionX, int positionY, int speed, int color[4], SDL_Renderer *renderer, int PlayerWidth, int PlayerHeight);
 
