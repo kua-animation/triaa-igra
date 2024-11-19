@@ -1,57 +1,31 @@
 #include "../files-h/player.h"
 
-int collisionRect(Player *name, Rect *rect, int *speed, int bounce){
+int collisionRect(Player *name, Rect *rect, int *speed){
     const int buffer = 10;
-
-    switch (bounce)
-    {
-    case BOUNCE:
     if (name->hitBox.side.bottom > rect->hitBox.top + buffer && name->hitBox.side.top < rect->hitBox.bottom - buffer){
         if (name->hitBox.side.right > rect->hitBox.left && name->hitBox.side.left < rect->hitBox.left){
             name->position.x = rect->hitBox.left - (name->window.Width/2 + name->scale.Width/2);
-            *speed = -*speed;
+            *speed = -*speed*3;
+            return 1;
         }
         if (name->hitBox.side.left < rect->hitBox.right && name->hitBox.side.right > rect->hitBox.right){
             name->position.x = rect->hitBox.right - (name->window.Width/2 - name->scale.Width/2);
-            *speed = -*speed;
-
+            *speed = -*speed*3;
+            return 2;
         }
     }if (name->hitBox.side.left < rect->hitBox.right - buffer && name->hitBox.side.right > rect->hitBox.left + buffer){
         if (name->hitBox.side.bottom > rect->hitBox.top && name->hitBox.side.top < rect->hitBox.top){
             name->position.y = rect->hitBox.top - (name->window.Height/2 + name->scale.Height/2);
-            *speed = -*speed;
+            *speed = -*speed*3;
+            return 3;
         }
         if (name->hitBox.side.top < rect->hitBox.bottom && name->hitBox.side.bottom > rect->hitBox.bottom ){
             name->position.y = rect->hitBox.bottom - (name->window.Height/2 - name->scale.Height/2);
-            *speed = -*speed;
+            *speed = -*speed*3;
+            return 4;
         }
     }
-    break;
-    case NO_BOUNCE:
-    if (name->hitBox.side.bottom > rect->hitBox.top + buffer && name->hitBox.side.top < rect->hitBox.bottom - buffer){
-        if (name->hitBox.side.right > rect->hitBox.left && name->hitBox.side.left < rect->hitBox.left){
-            name->position.x = rect->hitBox.left - (name->window.Width/2 + name->scale.Width/2);
-            *speed = 0;
-        }
-        if (name->hitBox.side.left < rect->hitBox.right && name->hitBox.side.right > rect->hitBox.right){
-            name->position.x = rect->hitBox.right - (name->window.Width/2 - name->scale.Width/2);
-            *speed = 0;
-
-        }
-    }if (name->hitBox.side.left < rect->hitBox.right - buffer && name->hitBox.side.right > rect->hitBox.left + buffer){
-        if (name->hitBox.side.bottom > rect->hitBox.top && name->hitBox.side.top < rect->hitBox.top){
-            name->position.y = rect->hitBox.top - (name->window.Height/2 + name->scale.Height/2);
-            *speed = 0;
-        }
-        if (name->hitBox.side.top < rect->hitBox.bottom && name->hitBox.side.bottom > rect->hitBox.bottom ){
-            name->position.y = rect->hitBox.bottom - (name->window.Height/2 - name->scale.Height/2);
-            *speed = 0;
-        }
-    }
-    break;
-    default:
-    break;
-    }
+    return 0;
 }
 
 void collisionScrine(Player *name, int scrineHeight, int scrineWidth, int *speed){
@@ -72,56 +46,28 @@ void collisionScrine(Player *name, int scrineHeight, int scrineWidth, int *speed
     }
 }
 
-int collisionWindow(Player *name, Window *window, int *speed, int bounce){
+int collisionWindow(Player *name, Window *window, int *speed, int worlds){
     const int buffer = 30;
 
-        switch (bounce)
-    {
-    case BOUNCE:
-        if (name->window.side.bottom > window->scrine.side.top + buffer && name->window.side.top < window->scrine.side.bottom - buffer){
-            if (name->window.side.right > window->scrine.side.left && name->window.side.left < window->scrine.side.left){
-                name->position.x = window->scrine.side.left - name->window.Width;
-                *speed = -*speed;
-            }
-            if (name->window.side.left < window->scrine.side.right && name->window.side.right > window->scrine.side.right){
-                name->position.x = window->scrine.side.right;
-                *speed = -*speed;
-            }
-        }if (name->window.side.left < window->scrine.side.right - buffer && name->window.side.right > window->scrine.side.left + buffer){
-            if (name->window.side.bottom > window->scrine.side.top && name->window.side.top < window->scrine.side.top){
-                name->position.y = window->scrine.side.top - name->window.Height;
-                *speed = -*speed;
-            }
-            if (name->window.side.top < window->scrine.side.bottom && name->window.side.bottom > window->scrine.side.bottom ){
-                name->position.y = window->scrine.side.bottom;
-                *speed = -*speed;
-            }
+    if (name->window.side.bottom > window->scrine.side.top + buffer && name->window.side.top < window->scrine.side.bottom - buffer){
+        if (name->window.side.right > window->scrine.side.left && name->window.side.left < window->scrine.side.left){
+            name->position.x = window->scrine.side.left - name->window.Width;
+            return 1;
         }
-    break;
-    case NO_BOUNCE:
-        if (name->window.side.bottom > window->scrine.side.top + buffer && name->window.side.top < window->scrine.side.bottom - buffer){
-            if (name->window.side.right > window->scrine.side.left && name->window.side.left < window->scrine.side.left){
-                name->position.x = window->scrine.side.left - name->window.Width;
-                *speed = 0;
-            }
-            if (name->window.side.left < window->scrine.side.right && name->window.side.right > window->scrine.side.right){
-                name->position.x = window->scrine.side.right;
-                *speed = 0;
-            }
-        }if (name->window.side.left < window->scrine.side.right - buffer && name->window.side.right > window->scrine.side.left + buffer){
-            if (name->window.side.bottom > window->scrine.side.top && name->window.side.top < window->scrine.side.top){
-                name->position.y = window->scrine.side.top - name->window.Height;
-                *speed = 0;
-            }
-            if (name->window.side.top < window->scrine.side.bottom && name->window.side.bottom > window->scrine.side.bottom ){
-                name->position.y = window->scrine.side.bottom;
-                *speed = 0;
-            }
+        if (name->window.side.left < window->scrine.side.right && name->window.side.right > window->scrine.side.right){
+            name->position.x = window->scrine.side.right;
+            return 2;
         }
-    break;
-    default:
-    break;
+    }if (name->window.side.left < window->scrine.side.right - buffer && name->window.side.right > window->scrine.side.left + buffer){
+        if (name->window.side.bottom > window->scrine.side.top && name->window.side.top < window->scrine.side.top){
+            return 3;
+        }
+        if (name->window.side.top < window->scrine.side.bottom && name->window.side.bottom > window->scrine.side.bottom ){
+            name->position.y = window->scrine.side.bottom;
+            return 4;
+        }
     }
+    return 0;
 }
 
 void setPlayerSide(Player *name){

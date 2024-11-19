@@ -2,7 +2,7 @@
 #include "../files-h/createWindow.h"
 
 
-void _drawPlayer(int positionX, int positionY, int speed, int color[4], SDL_Renderer *renderer, int PlayerWidth, int PlayerHeight){
+void _drawPlayer(int positionX, int positionY, int *speed, int color[4], SDL_Renderer *renderer, int PlayerWidth, int PlayerHeight){
     SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], color[3]);
     SDL_Point a = {positionX,positionY}, b = {positionX + PlayerWidth ,positionY}, c = {positionX + PlayerWidth/2,positionY - PlayerHeight };
     SDL_RenderDrawLine(renderer, a.x, a.y, b.x, b.y);
@@ -15,10 +15,17 @@ void _rectelgle(int positionX, int positionY, int height, int width, int addPosi
     SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], color[3]);
     SDL_Rect rect = {positionX - addPositionX, positionY - addPositionY, width, height};
     SDL_RenderDrawRect(renderer, &rect);
+    for(int i = 0; i < width; i++){
+        width -= i;
+        height -= i;
+        positionX += i;
+        positionY += i;
+        SDL_SetRenderDrawColor(renderer, color[0] - i*2, color[1] - i*2, color[2], color[3]);
+        SDL_Rect rect = {positionX - addPositionX, positionY - addPositionY, width, height};
+        SDL_RenderDrawRect(renderer, &rect);
+    }
+    
     }
 }
 
-void render(Player *name, int speed, int color[4][4], SDL_Renderer *renderer[], Rect *rect){
-
-}
 
