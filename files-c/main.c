@@ -26,7 +26,7 @@ int main() {
     colors(colorRow,4, Color, colorFile);
 
     Player player = {{0, 0}, 
-        {60, 60, {500,500}},
+        {60, 60, {250,250}},
         {player.scale.TrueSize.x,
         player.scale.TrueSize.y,}
     };

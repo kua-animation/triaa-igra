@@ -15,12 +15,12 @@ void _rectelgle(int positionX, int positionY, int height, int width, int addPosi
     SDL_SetRenderDrawColor(renderer, color[0], color[1], color[2], color[3]);
     SDL_Rect rect = {positionX - addPositionX, positionY - addPositionY, width, height};
     SDL_RenderDrawRect(renderer, &rect);
-    for(int i = 0; i < width; i++){
-        width -= i;
-        height -= i;
-        positionX += i;
-        positionY += i;
-        SDL_SetRenderDrawColor(renderer, color[0] - i*2, color[1] - i*2, color[2], color[3]);
+    for(int i = 0; i < width/8; i++){
+        width -= abs(i-30)/2;
+        height -= abs(i-30)/2;
+        positionX += abs(i-30)/2;
+        positionY += abs(i-30)/2;
+        SDL_SetRenderDrawColor(renderer, color[0] - i*5, color[1] - i*5, color[2], color[3]);
         SDL_Rect rect = {positionX - addPositionX, positionY - addPositionY, width, height};
         SDL_RenderDrawRect(renderer, &rect);
     }
