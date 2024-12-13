@@ -11,7 +11,6 @@ Rect rects[3]={
     {{580,580},{100,100}},
 };
 
-int muni = 0;
 SDL_Event event;
 
 int windowLode(Player *playerName, Window *doorWindow);
@@ -71,16 +70,18 @@ int main() {
                 world -= 1;
                 a = 0;
             }
-            // axes swich
-            if (index = _move_Click(index, event, 1,2) != 0){
-                player.position.x -= speed;
-                player.position.y += 0;
-            } else{
-                player.position.y += speed;
-                player.position.x += 0;
-            }
 
-            speed = _move_Wheel(speed, event, 1);
+            if (b = _move_Hold(b,1,3) != 0){
+                player.window.Width = 500;
+                player.window.Height = 500;
+                b = 0;
+            } else {
+                player.window.Width = 250;
+                player.window.Height = 250;
+            }
+            speed = 2;
+
+            _move(&player,speed,0,event);
 
             if (speed > 5 - (player.window.Width/ player.scale.TrueSize.x)*2){speed = 5 - (player.window.Width / player.scale.TrueSize.x)*2;}
             else if (speed < -5 + (player.window.Width / player.scale.TrueSize.x)*2){speed = -5 + (player.window.Width / player.scale.TrueSize.x)*2;} 
@@ -157,9 +158,7 @@ void worlds(Player *playerName, int *speed, int color[4][4], int str, int end){
             y = collisionRect(playerName, &rects[i], speed);
         }
         if ( y > 0){
-            muni += 1;
-            rects[i].size.Height -= 15;
-            rects[i].size.Width -= 15;
+            *speed = 0;
         }
 
     }

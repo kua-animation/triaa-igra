@@ -54,3 +54,25 @@ void SetRectSide(Rect *rect){
     rect->hitBox.left = rect->position.x;
     rect->hitBox.right = rect->position.x + rect->size.Width;
 }
+
+int _move(Player *player, int speed, int botton, SDL_Event event){
+    int PlX;
+    int PlY;
+    if (event.type == SDL_MOUSEBUTTONDOWN){
+        if (event.button.button == 1){
+            
+        }
+    }
+    Uint32 mousePosition = SDL_GetMouseState(&PlX, &PlY);
+    if (player->position.x + player->window.Width/2 > PlX+5){
+        player->position.x -= speed;
+    } else if (player->position.x + player->window.Width/2 < PlX-5){
+        player->position.x += speed;
+    } else if (player->position.y + player->window.Height/2 > PlY+5){
+        player->position.y -= speed;
+    } else if (player->position.y + player->window.Height/2 < PlY-5){
+        player->position.y += speed;
+    }
+    
+    
+}
